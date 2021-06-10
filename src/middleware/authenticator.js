@@ -7,11 +7,13 @@ const authenticator = (req, res, next) => {
     const { accessToken } = req.body;
     if (!accessToken) throw clientErrors.BadRequest("no accessToken supplied");
     const tokenData = token.validateAccessToken(accessToken); // throws an error if invalid, else it is true
-    next(tokenData);
+    req.id = tokenData.id;
+    next();
   } catch (err) {
     if (err instanceof JsonWebTokenError) {
       throw clientErrors.Unauthorized("invalid api token");
     }
+    next(err);
   }
 };
 

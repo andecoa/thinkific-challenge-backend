@@ -2,7 +2,7 @@ const User = require("../../models/User");
 
 const getCurrent = async (req, res, next) => {
   try {
-    const { id } = req.body;
+    const { id } = req; // from authenticator middleware
     const { userInteger } = await User.findById(id);
     res.json({ userInteger });
   } catch (err) {
@@ -12,7 +12,8 @@ const getCurrent = async (req, res, next) => {
 
 const putCurrent = async (req, res, next) => {
   try {
-    const { id, newInteger } = req.body;
+    const { id } = req; // from authenticator middleware
+    const { newInteger } = req.body;
     const { userInteger } = await User.findByIdAndUpdate(
       id,
       {
@@ -28,7 +29,7 @@ const putCurrent = async (req, res, next) => {
 
 const getNext = async (req, res, next) => {
   try {
-    const { id } = req.body;
+    const { id } = req; // from authenticator middleware
     const { userInteger } = await User.findByIdAndUpdate(
       id,
       {
