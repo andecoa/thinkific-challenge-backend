@@ -12,6 +12,14 @@ const handleErrors = (err, req, res, next) => {
     errorJSON.message = "resource already exists";
     return res.status(409).json(errorJSON);
   }
+  // ideally we should have validation middleware
+  if (err.name === "ValidationError") {
+    errorJSON.message = err
+      .toString()
+      .replace("ValidationError: ", "")
+      .split(",");
+    return res.status(400).json(errorJSON);
+  }
   if (errCode !== 500 && errCode !== undefined) {
     errorJSON.message = err.message;
     return res.status(errCode).json(errorJSON);
