@@ -19,7 +19,7 @@ const postRegister = async (req, res, next) => {
     const user = await User.create({ email, password });
     const userJSON = user.toJSON();
     userJSON.accessToken = token.createAccessToken(user.id);
-    return res.status(201).json(userJSON);
+    res.status(201).json(userJSON);
   } catch (err) {
     next(err);
   }
