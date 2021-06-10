@@ -1,9 +1,13 @@
 const User = require("../../models/User");
 const token = require("../../utils/token");
+const clientErrors = require("../../utils/clientErrors");
 
 const postLogin = async (req, res, next) => {
   try {
     const { email, password } = req.body;
+    if (!email || !password) {
+      throw clientErrors.BadRequest("email/password field missing");
+    }
     const user = await User.login(email, password);
     const userJSON = user.toJSON();
     userJSON.accessToken = token.createAccessToken(user.id);
@@ -16,6 +20,9 @@ const postLogin = async (req, res, next) => {
 const postRegister = async (req, res, next) => {
   try {
     const { email, password } = req.body;
+    if (!email || !password) {
+      throw clientErrors.BadRequest("email/password field missing");
+    }
     const user = await User.create({ email, password });
     const userJSON = user.toJSON();
     userJSON.accessToken = token.createAccessToken(user.id);
