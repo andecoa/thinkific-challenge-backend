@@ -12,5 +12,7 @@ module.exports = {
   rules: {
     "prettier/prettier": ["error"],
     "no-unused-vars": ["error", { argsIgnorePattern: "next" }],
+    "no-underscore-dangle": "off",
+    "no-param-reassign": "off",
   },
 };
