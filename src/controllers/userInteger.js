@@ -5,9 +5,8 @@ const { BadRequest, UnprocessibleEntry } = require("../utils/clientErrors");
 
 const getCurrent = async (req, res, next) => {
   try {
-    const { email } = req.body;
-
-    if (!email) throw BadRequest("Missing 'email' field");
+    const email = req.user["https://aldecoa.xyz/email"];
+    if (!email) throw BadRequest("Missing 'email' field from JWT");
 
     const userInteger = await UserInteger.findOne({ email });
     res.json({ value: userInteger?.value || 0 });
@@ -18,10 +17,12 @@ const getCurrent = async (req, res, next) => {
 
 const setCurrent = async (req, res, next) => {
   try {
-    const { email, newInteger } = req.body;
+    const email = req.user["https://aldecoa.xyz/email"];
+    if (!email) throw BadRequest("Missing 'email' field from JWT");
 
-    if (!email || !newInteger)
-      throw BadRequest("Missing 'email' or 'newInteger' field");
+    const { newInteger } = req.body;
+    if (!newInteger)
+      throw BadRequest("Missing 'newInteger' field from request body");
     if (!Number.isInteger(newInteger) || newInteger < 0)
       throw UnprocessibleEntry("`newInteger` should be a non-negative number");
 
@@ -43,9 +44,8 @@ const setCurrent = async (req, res, next) => {
 
 const getNext = async (req, res, next) => {
   try {
-    const { email } = req.body;
-
-    if (!email) throw BadRequest("Missing 'email' field");
+    const email = req.user["https://aldecoa.xyz/email"];
+    if (!email) throw BadRequest("Missing 'email' field from JWT");
 
     const userInteger = await UserInteger.findOneAndUpdate(
       { email },
