@@ -7,6 +7,13 @@ const handleErrors = (err, req, res, next) => {
     status: "error",
     message: "internal server error",
   };
+
+  // handling for JWT-related errors
+  if (err.name === "UnauthorizedError") {
+    errorJSON.message = err.message;
+    return res.status(err.status).json(errorJSON);
+  }
+
   // handling for malformed JSON input error
   if (err instanceof SyntaxError && err.status === 400 && "body" in err) {
     errorJSON.message = "please check your input since input is malformed";
