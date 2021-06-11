@@ -25,6 +25,7 @@
     "argon2": "^0.28.2",
     "express": "^4.17.1",
     "express-jwt": "^6.0.0",
+    "express-jwt-authz": "^2.4.1",
     "jwks-rsa": "^2.0.3",
     "mongoose": "^5.12.13",
     "pino": "^6.11.3"
