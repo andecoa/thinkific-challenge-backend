@@ -5,6 +5,7 @@ Angelo Aldecoa, angeloaldecoa@gmail.com, aldecoa.xyz
 
 ### Notes
 - This is a protected resource server that can be accessed only if you have a valid JWT token issued by Auth0.
+- This resource server contains no state so it can be scaled as much as possible. It uses an external MongoDB instance to store data, and it uses JWT tokens to add authorization for endpoints. 
 - I initially created my own token auth logic, but found that it was better to use Auth0 to better mimic real-world work 
 - Routes are protected using Auth0-issued JWT tokens and Auth0-issued API scopes
 - You may not test this API unless if you have a valid Auth0-issued JWT with the right scopes attached
@@ -55,3 +56,4 @@ It will be really annoying to test this locally (you'll have to set up Auth0), s
 ### Your feedback on this technical challenge
 - I liked this technical challenge, but it might be better to turn the `GET /next` endpoint (that mutates user data) into a `PUT /next` endpoint instead.
 - It would be nice to define the API consumer beforehand so we can get an know whether to implement API keys that do not expire (for server-to-server apps) or temporary access tokens that get refreshed in a user's browser.
+- Servers are not free so I'm lucky that I had access to a MongoDB instance and a VPS for hosting this Express app. Other candidates might have problems because if they use a free-tier service like Heroku, thier app might "go to sleep" which could make it seem like their server is broken when someone from Thinkific does a demo.
